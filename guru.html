@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Guru - Portal Ujian Online</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -33,6 +33,222 @@
     .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .status-text { font-size: 0.85rem; color: #636e72; margin-top: 5px; }
   </style>
+
+<style id="index4-visual-theme">
+/* ============================================================
+   TEMA VISUAL SAMA DENGAN index(4).html
+   HANYA CSS/TAMPILAN — LOGIKA JAVASCRIPT TIDAK DIUBAH.
+   ============================================================ */
+
+:root {
+  --bg-body: #f0f7ff;
+  --primary: #0284c7;
+  --primary-cyan: #06b6d4;
+  --primary-light: #38bdf8;
+  --accent-yellow: #f59e0b;
+  --yellow-bright: #facc15;
+  --success: #10b981;
+  --danger: #ef4444;
+  --dark: #0f172a;
+  --card-bg: rgba(255,255,255,.94);
+  --border-color: #e2e8f0;
+  --shadow-blue: rgba(2,132,199,.20);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg-body);
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(56,189,248,.10) 0%, transparent 38%),
+    radial-gradient(circle at 90% 90%, rgba(250,204,21,.09) 0%, transparent 38%),
+    linear-gradient(135deg, #f0f7ff 0%, #f8fbff 55%, #eef8ff 100%);
+  min-height: 100vh;
+  color: var(--dark);
+  padding: 24px 16px;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+/* Semua kartu mengikuti gaya kartu index(4) */
+.card {
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(226,232,240,.95);
+  border-radius: 24px;
+  box-shadow:
+    0 12px 30px rgba(15,23,42,.07),
+    0 3px 10px rgba(2,132,199,.04);
+  backdrop-filter: blur(8px);
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: -.3px;
+}
+
+/* Form */
+.form-group label {
+  color: #334155;
+  font-weight: 700;
+}
+
+.form-control {
+  background: #fff;
+  border: 1.5px solid #dbe5ee;
+  color: var(--dark);
+  border-radius: 12px;
+  transition: .2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.12);
+}
+
+/* Tombol mengikuti bentuk dan warna index(4) */
+.btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all .25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(2,132,199,.22);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(2,132,199,.30);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: #fff;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #fff;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #fff;
+}
+
+/* Tabel */
+table {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 5px 16px rgba(15,23,42,.04);
+  overflow: hidden;
+}
+
+th, td {
+  border-bottom: 1px solid #edf2f7;
+}
+
+th {
+  background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+}
+
+tr:hover {
+  background: #f0f9ff;
+}
+
+/* Elemen statistik/label */
+.badge,
+.tag,
+.stat,
+.status {
+  border-radius: 999px;
+}
+
+/* Link dan aksen */
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  color: #0369a1;
+}
+
+/* Modal / panel jika ada */
+.modal,
+.modal-content,
+.panel,
+.dropdown-menu {
+  border-radius: 20px;
+}
+
+.modal-content,
+.panel {
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 20px 45px rgba(15,23,42,.14);
+  border: 1px solid #e2e8f0;
+}
+
+/* Scrollbar agar senada */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eaf3f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#38bdf8, #0284c7);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* Responsif mengikuti nuansa index(4) */
+@media (max-width: 700px) {
+  body {
+    padding: 14px 10px;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  table {
+    font-size: .85rem;
+  }
+
+  th, td {
+    padding: 10px 9px;
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="container">
@@ -94,7 +310,7 @@
 
   <script>
   // Masukkan URL Deploy Web App Google Apps Script Anda di sini:
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIhRE-1Au2CaBQLZmG0U832RVB1XCAxKYl6hRknD2lH_cEvYkKBK_qObF5cvbbeNN6Sg/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwT0rZNCcj31dOaq6T-dj13M5BckLr5SgricNUqtUYrVSaEFLi8EFq2YIJf7YSnwk_j/exec";
 
   let fetchedExamHistory = [];
 
