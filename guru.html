@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="exam-security-version" content="SECURITY V3.1 HIGH CONCURRENCY">
+  <title>Dashboard Guru - Portal Ujian Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #a8edd9 0%, #fed6e3 100%);
+      --primary: #ff6b6b; --secondary: #4ecdc4; --purple: #6c5ce7;
+      --danger: #ff7675; --dark: #2d3436; --card-bg: rgba(255, 255, 255, 0.95);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background: var(--bg-gradient); min-height: 100vh; color: var(--dark); padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .card { background: var(--card-bg); border-radius: 24px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 3px solid #fff; margin-bottom: 20px; }
+    h2 { font-family: 'Fredoka', sans-serif; color: var(--purple); margin-bottom: 15px; }
+    .form-group { margin-bottom: 15px; text-align: left; }
+    .form-group label { font-weight: 600; display: block; margin-bottom: 5px; }
+    .form-control { width: 100%; padding: 12px 16px; border-radius: 12px; border: 2px solid #dfe6e9; font-size: 1rem; outline: none; }
+    .form-control:focus { border-color: var(--purple); }
+    .btn { font-family: 'Fredoka', sans-serif; font-size: 1rem; padding: 10px 18px; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; }
+    .btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-success { background: #00b894; color: #fff; }
+    .btn-info { background: #0984e3; color: #fff; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; border-radius: 12px; overflow: hidden; }
+    th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #f1f2f6; font-size: 0.9rem; }
+    th { background: var(--purple); color: white; font-family: 'Fredoka', sans-serif; }
+    tr:hover { background: #f8f9fa; }
+    .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .status-text { font-size: 0.85rem; color: #636e72; margin-top: 5px; }
+  </style>
+
+<style id="index4-visual-theme">
+/* ============================================================
+   TEMA VISUAL SAMA DENGAN index(4).html
+   HANYA CSS/TAMPILAN — LOGIKA JAVASCRIPT TIDAK DIUBAH.
+   ============================================================ */
+
+:root {
+  --bg-body: #f0f7ff;
+  --primary: #0284c7;
+  --primary-cyan: #06b6d4;
+  --primary-light: #38bdf8;
+  --accent-yellow: #f59e0b;
+  --yellow-bright: #facc15;
+  --success: #10b981;
+  --danger: #ef4444;
+  --dark: #0f172a;
+  --card-bg: rgba(255,255,255,.94);
+  --border-color: #e2e8f0;
+  --shadow-blue: rgba(2,132,199,.20);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg-body);
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(56,189,248,.10) 0%, transparent 38%),
+    radial-gradient(circle at 90% 90%, rgba(250,204,21,.09) 0%, transparent 38%),
+    linear-gradient(135deg, #f0f7ff 0%, #f8fbff 55%, #eef8ff 100%);
+  min-height: 100vh;
+  color: var(--dark);
+  padding: 24px 16px;
+}
+
+.container {
+  max-width: 1000px;
+}
+
+/* Semua kartu mengikuti gaya kartu index(4) */
+.card {
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(226,232,240,.95);
+  border-radius: 24px;
+  box-shadow:
+    0 12px 30px rgba(15,23,42,.07),
+    0 3px 10px rgba(2,132,199,.04);
+  backdrop-filter: blur(8px);
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: -.3px;
+}
+
+/* Form */
+.form-group label {
+  color: #334155;
+  font-weight: 700;
+}
+
+.form-control {
+  background: #fff;
+  border: 1.5px solid #dbe5ee;
+  color: var(--dark);
+  border-radius: 12px;
+  transition: .2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.12);
+}
+
+/* Tombol mengikuti bentuk dan warna index(4) */
+.btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all .25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(2,132,199,.22);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(2,132,199,.30);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: #fff;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #fff;
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #fff;
+}
+
+/* Tabel */
+table {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 5px 16px rgba(15,23,42,.04);
+  overflow: hidden;
+}
+
+th, td {
+  border-bottom: 1px solid #edf2f7;
+}
+
+th {
+  background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+}
+
+tr:hover {
+  background: #f0f9ff;
+}
+
+/* Elemen statistik/label */
+.badge,
+.tag,
+.stat,
+.status {
+  border-radius: 999px;
+}
+
+/* Link dan aksen */
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  color: #0369a1;
+}
+
+/* Modal / panel jika ada */
+.modal,
+.modal-content,
+.panel,
+.dropdown-menu {
+  border-radius: 20px;
+}
+
+.modal-content,
+.panel {
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 20px 45px rgba(15,23,42,.14);
+  border: 1px solid #e2e8f0;
+}
+
+/* Scrollbar agar senada */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eaf3f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#38bdf8, #0284c7);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* Responsif mengikuti nuansa index(4) */
+@media (max-width: 700px) {
+  body {
+    padding: 14px 10px;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  table {
+    font-size: .85rem;
+  }
+
+  th, td {
+    padding: 10px 9px;
+  }
+}
+</style>
+
+
+<style id="teacher-auth-style">
+#authGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.55);backdrop-filter:blur(8px);}
+.auth-box{width:min(430px,100%);background:rgba(255,255,255,.98);border:1px solid #e2e8f0;border-radius:24px;padding:28px;box-shadow:0 25px 60px rgba(15,23,42,.22);text-align:center;}
+.auth-box h2{margin-bottom:8px;}
+.auth-box p{color:#64748b;font-size:.92rem;line-height:1.5;margin-bottom:18px;}
+.auth-box .form-control{text-align:center;letter-spacing:3px;font-weight:800;}
+.auth-status{min-height:20px;margin-top:10px;font-size:.85rem;font-weight:700;color:#ef4444;}
+.auth-lock{width:58px;height:58px;margin:0 auto 14px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#0284c7,#06b6d4);color:#fff;font-size:24px;box-shadow:0 10px 24px rgba(2,132,199,.22);}
+#dashboardContent{display:none;}
+.btn-logout{background:#64748b;color:#fff;}
+</style>
+
+<style id="blacklist-style">
+.blacklist-card { border-left: 5px solid #ef4444; }
+.blacklist-badge { display:inline-block; padding:5px 10px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:800; font-size:.78rem; }
+.btn-allow { background:linear-gradient(135deg,#10b981,#34d399); color:#fff; border:none; border-radius:10px; padding:8px 12px; font-weight:800; cursor:pointer; }
+.btn-allow:hover { transform:translateY(-1px); }
+@media(max-width:700px){ .blacklist-table th,.blacklist-table td{font-size:.8rem;padding:8px 7px;} }
+</style>
+
+</head>
+<style id="schedule-admin-style">
+  .schedule-card { border-left:5px solid #2563eb; }
+  .schedule-help { color:#64748b; font-size:.9rem; line-height:1.55; }
+  .schedule-toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:end; margin:14px 0; }
+  .schedule-toolbar .form-group { flex:1 1 160px; margin-bottom:0; }
+  .schedule-table th,.schedule-table td { padding:9px 8px; border-bottom:1px solid #e2e8f0; text-align:left; white-space:nowrap; }
+  .schedule-table { width:100%; border-collapse:collapse; }
+  .schedule-table input,.schedule-table select { min-width:120px; padding:8px; border:1px solid #cbd5e1; border-radius:8px; }
+  .schedule-actions { display:flex; gap:6px; flex-wrap:wrap; }
+  .schedule-status { margin-top:10px; font-weight:700; }
+  @media(max-width:700px){ .schedule-table th,.schedule-table td{font-size:.78rem;padding:7px 6px;} .schedule-table input,.schedule-table select{min-width:100px;} }
+</style>
+<body>
+  <div id="authGate">
+    <div class="auth-box">
+      <div class="auth-lock"><i class="fa-solid fa-shield-halved"></i></div>
+      <h2>Akses Guru</h2>
+      <p>Masukkan PIN guru untuk membuka panel kontrol, daftar nilai, pengaturan token, dan daftar siswa yang diblokir.</p>
+      <input id="teacherPin" class="form-control" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN Guru" onkeydown="if(event.key==='Enter') teacherLogin()">
+      <button class="btn btn-primary" style="width:100%;margin-top:12px;" onclick="teacherLogin()"><i class="fa-solid fa-right-to-bracket"></i> Masuk</button>
+      <div id="authStatus" class="auth-status"></div>
+    </div>
+  </div>
+
+  <div id="dashboardContent">
+  <div class="container">
+    <!-- PANEL KONTROL GURU -->
+    <div class="card">
+      <h2><i class="fa-solid fa-chalkboard-user"></i> Panel Kontrol Guru Ujian Online</h2>
+      <div style="margin:-4px 0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <a href="https://script.google.com/macros/s/AKfycbxdGjLxG6ez3L6s9o_TKkxDydrYj2jlSUwiVoAzgszK7hpyA4xufTYvSEmChfrZZWs4EQ/exec" target="_blank" rel="noopener" class="btn btn-info" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="fa-solid fa-link"></i> Buka Link Server Ujian</a>
+        <span style="font-size:.82rem;color:#64748b;">Server jadwal &amp; pengiriman: Web App Google Apps Script</span>
+      </div>
+      <div class="flex-row" style="margin-bottom: 20px;">
+        <div class="form-group" style="flex: 1; margin-bottom:0;">
+          <label>Atur Token Ujian Aktif</label>
+          <input type="text" id="tokenInput" class="form-control" placeholder="Contoh: SMP99">
+        </div>
+        <button class="btn btn-primary" style="margin-top: 24px;" onclick="saveToken()">Simpan Token</button>
+      </div>
+      <div class="flex-row" style="gap: 10px;">
+        <button class="btn btn-info" onclick="fetchLiveResults(); fetchBlacklist();"><i class="fa-solid fa-rotate"></i> Muat Ulang Data (Sync Cloud)</button>
+        <button class="btn btn-success" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Unduh Rekap (.xls / Excel)</button>
+      </div>
+      <div class="flex-row" style="justify-content:space-between;align-items:center;"><div id="statusText" class="status-text">Status: Siap memuat data...</div><button class="btn btn-logout" onclick="teacherLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button></div>
+    </div>
+
+
+    <!-- PENGATURAN JADWAL UJIAN -->
+    <div class="card schedule-card">
+      <h2><i class="fa-solid fa-calendar-days"></i> Pengaturan Jadwal Ujian</h2>
+      <p class="schedule-help"><b>Atur tanggal, jam mulai, jam selesai, dan mata pelajaran langsung dari dashboard.</b> Setelah disimpan, jadwal ini menjadi acuan server dan Index ujian. Guru tidak perlu lagi membuka file HTML atau mencari lokasi script untuk mengganti jam.</p>
+      <div class="schedule-toolbar">
+        <div class="form-group"><label>Tanggal</label><input type="date" id="scheduleDate" class="form-control"></div>
+        <div class="form-group"><label>Mulai</label><input type="time" id="scheduleStart" class="form-control" value="07:30"></div>
+        <div class="form-group"><label>Selesai</label><input type="time" id="scheduleEnd" class="form-control" value="09:00"></div>
+        <div class="form-group"><label>Mata Pelajaran</label>
+          <select id="scheduleSubject" class="form-control" aria-label="Pilih mata pelajaran">
+            <option value="" selected disabled>-- Pilih Mata Pelajaran --</option>
+            <option value="pai">PAI &amp; BP</option>
+            <option value="ppkn">Pendidikan Pancasila</option>
+            <option value="indo">Bahasa Indonesia</option>
+            <option value="mtk">Matematika</option>
+            <option value="ipa">Ilmu Pengetahuan Alam</option>
+            <option value="inggris">Bahasa Inggris</option>
+            <option value="ips">Ilmu Pengetahuan Sosial</option>
+            <option value="informa">Informatika</option>
+            <option value="prakarya">Prakarya</option>
+            <option value="pjok">PJOK</option>
+            <option value="mulok">Muatan Lokal</option>
+            <option value="susulan">Susulan / Cadangan</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="addScheduleRow()"><i class="fa-solid fa-plus"></i> Tambah Jadwal</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="schedule-table">
+          <thead><tr><th>Tanggal</th><th>Mulai</th><th>Selesai</th><th>Mata Pelajaran</th><th>Aksi</th></tr></thead>
+          <tbody id="scheduleTableBody"><tr><td colspan="5" style="text-align:center;color:#94a3b8;">Memuat jadwal dari server...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="schedule-actions" style="margin-top:14px;">
+        <button class="btn btn-success" onclick="saveScheduleSettings()"><i class="fa-solid fa-cloud-arrow-up"></i> Simpan Jadwal ke Server</button>
+        <button class="btn btn-info" onclick="loadScheduleSettings()"><i class="fa-solid fa-rotate"></i> Muat Jadwal</button>
+        <button class="btn btn-secondary" onclick="resetScheduleSettings()"><i class="fa-solid fa-rotate-left"></i> Kembalikan Jadwal Default</button>
+      </div>
+      <div id="scheduleAdminStatus" class="schedule-status"></div>
+    </div>
+
+    <!-- DAFTAR BLACKLIST / IZIN ULANG -->
+    <div class="card blacklist-card">
+      <h2><i class="fa-solid fa-user-lock"></i> Siswa Diblokir & Izin Mengikuti Ujian</h2>
+      <p class="status-text" style="margin-bottom:12px;">Siswa yang mencapai batas pelanggaran akan masuk daftar ini. Klik <b>Buka Blokir</b> setelah guru/pengawas memberikan izin.</p>
+      <div style="overflow-x:auto;">
+        <table class="blacklist-table" id="blacklistTable">
+          <thead><tr><th>Nama Siswa</th><th>Kelas</th><th>Pelanggaran</th><th>Alasan</th><th>Waktu Blokir</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="blacklistTableBody"><tr><td colspan="7" style="text-align:center;color:#94a3b8;">Memuat daftar...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABEL HASIL UJIAN SISWA -->
+    <div class="card">
+      <h2><i class="fa-solid fa-clipboard-list"></i> Daftar Nilai & Hasil Ujian Siswa</h2>
+      <div style="font-size:.82rem;color:#64748b;margin:-6px 0 12px;">Data nilai dihitung dan diverifikasi oleh server. Riwayat lama tetap ditampilkan sebagai data legacy. Antrean pengiriman V3.1 diproses bertahap ke Google Sheet untuk mengurangi beban saat pengiriman serentak.</div>
+      <div class="flex-row" style="margin-bottom: 15px;">
+        <div style="flex:1;">
+          <label style="font-size:0.85rem; font-weight:600;">Filter Kelas:</label>
+          <select id="filterClass" class="form-control" onchange="renderTable()">
+            <option value="ALL">Semua Kelas</option>
+            <option value="7.1">Kelas 7.1</option>
+            <option value="7.2">Kelas 7.2</option>
+            <option value="7.3">Kelas 7.3</option>
+            <option value="8.1">Kelas 8.1</option>
+            <option value="8.2">Kelas 8.2</option>
+            <option value="9.1">Kelas 9.1</option>
+            <option value="9.2">Kelas 9.2</option>
+          </select>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="exportTable">
+          <thead>
+            <tr>
+              <th>Waktu Kirim</th>
+              <th>Nama Siswa</th>
+              <th>Kelas</th>
+              <th>Mapel</th>
+              <th>Nilai PG</th>
+              <th>Pelanggaran Tab</th>
+              <th>Jawaban Essay</th>
+              <th>Status Server</th>
+              <th>Submission ID</th>
+              <th>Waktu Mulai</th>
+            </tr>
+          </thead>
+          <tbody id="resultTableBody">
+            <tr><td colspan="10" style="text-align:center; color:#b2bec3;">Belum ada data ujian yang masuk.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+  // Masukkan URL Deploy Web App Google Apps Script Anda di sini:
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdGjLxG6ez3L6s9o_TKkxDydrYj2jlSUwiVoAzgszK7hpyA4xufTYvSEmChfrZZWs4EQ/exec";
+
+  let fetchedExamHistory = [];
+
+  // Roster yang sama dengan server. Digunakan hanya untuk menampilkan/filter
+  // data hasil dan blacklist dengan benar bila ada data lama yang kolom
+  // kelasnya pernah tersimpan tidak benar. Tidak mengubah data Google Sheet.
+  const DASHBOARD_ROSTER = {
+  "7.1": [
+    {
+      "id": "SMP4-71-001",
+      "name": "AHMAD FAQIH GENTA BUANA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-002",
+      "name": "APRILIANA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-003",
+      "name": "BAGAS WIRAGUNA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-004",
+      "name": "BAIQ IMA KARTINA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-005",
+      "name": "BAIQ NISA APRIANA RATNASARI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-006",
+      "name": "BAIQ QONITA YUMNA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-007",
+      "name": "CHINTIA RAHMATULLOH BAHRI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-008",
+      "name": "DAVA ARGIANTARA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-009",
+      "name": "EFANI ZASKIA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-010",
+      "name": "FAVOUR CHIDIMMA ABUOGOR",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-011",
+      "name": "FEBRIAN AKBAR",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-012",
+      "name": "ISNA PADILA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-013",
+      "name": "L. MUH. HOTIBUL UMAM",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-014",
+      "name": "LALU ABDUL HAMID",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-015",
+      "name": "M. ALFIN",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-016",
+      "name": "MAYDA SAFIRA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-017",
+      "name": "MUH. ZAENUL AL MUJAHIDIN",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-018",
+      "name": "MUHAMAD HAIKAL",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-019",
+      "name": "MUHAMAD HAKKIN",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-020",
+      "name": "MUHAMMAD KHIDIR AL-MAKI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-021",
+      "name": "RAHIMA OKTAVIANI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-022",
+      "name": "RAISYA FADILA HUMAIRA",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-023",
+      "name": "RIRIN SAPRIYANDINI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-024",
+      "name": "SRI WULANDARI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-025",
+      "name": "SULIS NAPISA FITTRI",
+      "class": "7.1"
+    },
+    {
+      "id": "SMP4-71-026",
+      "name": "TALITA AZKIYA AMIRA",
+      "class": "7.1"
+    }
+  ],
+  "7.2": [
+    {
+      "id": "SMP4-72-001",
+      "name": "ROBBY ABYZAR",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-002",
+      "name": "AZZA RAODATUL",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-003",
+      "name": "AZZAHRA OKTAVIANA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-004",
+      "name": "CANDRA RAMADANI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-005",
+      "name": "DIA DAMAYATI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-006",
+      "name": "FARHANA BAYYINAH",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-007",
+      "name": "FEBRINA SUCI RAMDANI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-008",
+      "name": "FERDY RAMDAN",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-009",
+      "name": "JAYA HUJNA PRATAMA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-010",
+      "name": "JIHAN TALITA ULPA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-011",
+      "name": "JULIA RAMADANI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-012",
+      "name": "KARINA SUSANTI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-013",
+      "name": "LALU MUHAMAD ALBARA YUSUF",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-014",
+      "name": "LALU PURNAMA AGUNG",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-015",
+      "name": "M. ATTHORIK QORI KHALKY",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-016",
+      "name": "MUHAMAD TEDI PRATAMA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-017",
+      "name": "MUHAMAD YUDA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-018",
+      "name": "MUHAMMAD ALFIN HIDAYAT",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-019",
+      "name": "MUHAMMAD FIKRI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-020",
+      "name": "NASYA CAHAYA IRAWAN",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-021",
+      "name": "PATIR AHMAD ALZAMI",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-022",
+      "name": "RAEHANUN",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-023",
+      "name": "TASYA MAI VERA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-024",
+      "name": "VIOLA AURELIA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-025",
+      "name": "WAZIRAHUL WAIDA",
+      "class": "7.2"
+    },
+    {
+      "id": "SMP4-72-026",
+      "name": "ZAHWA ZAHRATUL AIN",
+      "class": "7.2"
+    }
+  ],
+  "7.3": [
+    {
+      "id": "SMP4-73-001",
+      "name": "ANITA AOLIA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-002",
+      "name": "BAIQ NUR'AIN",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-003",
+      "name": "BAIQ RIFA ZHAFIRA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-004",
+      "name": "BAIQ SHAQILA MEYSHA PUTRI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-005",
+      "name": "DIMA MARLINA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-006",
+      "name": "FATIN AINI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-007",
+      "name": "L. MUH. NADHIR FAIRUZ",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-008",
+      "name": "LALU AHMAD ALFIYAN KAROMI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-009",
+      "name": "LALU FAQIH ASYIRAF HAPUZA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-010",
+      "name": "LALU MUH. DAMAR WARI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-011",
+      "name": "M. RADIKA JANUARDI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-012",
+      "name": "MAESA WAHYUNI MARTAWIGUNA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-013",
+      "name": "MOH. FATRONI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-014",
+      "name": "MUHAMAD HAYKAL HARIS",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-015",
+      "name": "MUHAMAD KHAERUL ANAM",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-016",
+      "name": "MUHAMAD NASUHA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-017",
+      "name": "MUHAMAD PRAYUDA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-018",
+      "name": "NURIAN APRILIANA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-019",
+      "name": "PUTRI AZILA CAHAYA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-020",
+      "name": "REGINA UNGGA PRAYANI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-021",
+      "name": "ALVIN PRATISTA SANJAYA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-022",
+      "name": "RODIATUN ISLAMI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-023",
+      "name": "SALSABILA ANGGRAINI",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-024",
+      "name": "WANDIKA PANDU WINATA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-025",
+      "name": "YULIA AMANDA",
+      "class": "7.3"
+    },
+    {
+      "id": "SMP4-73-026",
+      "name": "MUHAMMAD AZANI",
+      "class": "7.3"
+    }
+  ],
+  "8.1": [
+    {
+      "id": "SMP4-81-001",
+      "name": "ADELA YUNITA SAFITRI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-002",
+      "name": "AHMAD NAJIHAN JOHARI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-003",
+      "name": "AHMAD RISKY KASIRAN",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-004",
+      "name": "ALUNA DWI BESTARI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-005",
+      "name": "BAIQ JULIA NINGSIH",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-006",
+      "name": "BERLIN KRISNA ADITYA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-007",
+      "name": "CARISA SULISTIANDARA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-008",
+      "name": "FAHMI YAHYA HILMI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-009",
+      "name": "FEBRIAN REPANZA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-010",
+      "name": "GAUS ALFATANI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-011",
+      "name": "HENDRI JANES",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-012",
+      "name": "JIHAN KAMALIA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-013",
+      "name": "LALU GUNAWAN RAMDANI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-014",
+      "name": "LALU M. BINTANG PRATAMA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-015",
+      "name": "LALU YAOZIL ZIONANDA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-016",
+      "name": "M. SANDY",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-017",
+      "name": "MUHAMAD MAULANA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-018",
+      "name": "NAYLA IZZATIYA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-019",
+      "name": "RAKAN ALPARIZI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-020",
+      "name": "SABILA RAHMANIDA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-021",
+      "name": "SAKIRA RODIYA FALIHA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-022",
+      "name": "SIWI DIVA SAFITRI",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-023",
+      "name": "SUCIAZUNI KHOZIATIN FIQIAH",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-024",
+      "name": "SULISTIANA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-025",
+      "name": "YUNIA PUTRI LATIFAH",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-026",
+      "name": "RENA MAULIDA",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-027",
+      "name": "RISKI GUNAWAN",
+      "class": "8.1"
+    },
+    {
+      "id": "SMP4-81-028",
+      "name": "AULIA ISNAWATI",
+      "class": "8.1"
+    }
+  ],
+  "8.2": [
+    {
+      "id": "SMP4-82-001",
+      "name": "AHMAD NAJIHIN JOHARI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-002",
+      "name": "AISAH MALA SANI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-003",
+      "name": "BAGUS RAIHAN ANUGRAH",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-004",
+      "name": "BAIQ KHARISMA PUTRI RINJANI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-005",
+      "name": "DAFFA ARYALABIB UKHVA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-006",
+      "name": "GALANG PRAMANA HIDAYAT",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-007",
+      "name": "LALU ANGLING DARMA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-008",
+      "name": "LALU MUH.HANDIKA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-009",
+      "name": "M. RADITYA KUSUMAH",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-010",
+      "name": "MADA ALINA CALLYSTA HARTATI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-011",
+      "name": "MUHAMAD AZRIL RAMADANI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-012",
+      "name": "MUHAMAD IMRON",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-013",
+      "name": "MUHAMMAD AL FAHRIZI PRATAMA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-014",
+      "name": "MUHAMMAD GUFRON BILFAQIH",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-015",
+      "name": "NAFSA MUTMAINNA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-016",
+      "name": "NAURA ALIFA SARI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-017",
+      "name": "NINDI AULIA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-018",
+      "name": "NUR SHELLA AINI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-019",
+      "name": "PATIYANA ASTUTI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-020",
+      "name": "RAISSA ANJANI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-021",
+      "name": "RIZKYA ANNISA ZAHRA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-022",
+      "name": "SABRINA ANANDA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-023",
+      "name": "SOFI HIDAYAH",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-024",
+      "name": "SYIFA NURFADHILA",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-025",
+      "name": "YUDA NOZWANDI",
+      "class": "8.2"
+    },
+    {
+      "id": "SMP4-82-026",
+      "name": "ZULIA NURITA",
+      "class": "8.2"
+    }
+  ],
+  "9.1": [
+    {
+      "id": "SMP4-91-001",
+      "name": "AHYAR ROSIDI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-002",
+      "name": "AZALIADESKA PUTRI DS",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-003",
+      "name": "AZIZAN AZZIKRI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-004",
+      "name": "BAIQ ANISA AULIA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-005",
+      "name": "BAIQ EVA BERDIA JULIANA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-006",
+      "name": "BAIQ PUTRI SAVANA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-007",
+      "name": "EZA WARDANI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-008",
+      "name": "FAISAL NUGROHO",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-009",
+      "name": "FITRI INDRAYANI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-010",
+      "name": "GEDE PUTRA WANGSA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-011",
+      "name": "HAURA HASNA HAZIMA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-012",
+      "name": "IHSAN SUBRAKA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-013",
+      "name": "INAYAH ULANDARI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-014",
+      "name": "LALU MUHAMAD NAUFAL",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-015",
+      "name": "MARLIANA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-016",
+      "name": "MUHAMAD FARIS CANDRA ZULPIAN",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-017",
+      "name": "NURUL HUSNA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-018",
+      "name": "PUTRI VERA JULIANTI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-019",
+      "name": "RIFA ALGIFARI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-020",
+      "name": "TANAYA EL YANDANI",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-021",
+      "name": "UZWA ALIVIA",
+      "class": "9.1"
+    },
+    {
+      "id": "SMP4-91-022",
+      "name": "WINA FEBRIANA",
+      "class": "9.1"
+    }
+  ],
+  "9.2": [
+    {
+      "id": "SMP4-92-001",
+      "name": "ALIYA MAESYA PUTRI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-002",
+      "name": "ADAM RIZKY PRATAMA",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-003",
+      "name": "AMI FARAZIA SUBKI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-004",
+      "name": "ANISA AMIARIANTI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-005",
+      "name": "AZIZIL AKBAR",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-006",
+      "name": "BAIQ MITA SUJANAH",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-007",
+      "name": "BAIQ NIZA KUSUMA DEWI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-008",
+      "name": "ELSA SULISTIANI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-009",
+      "name": "EVA NURMAYANTI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-010",
+      "name": "HAMZAN WADI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-011",
+      "name": "INAYA UMAIRO",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-012",
+      "name": "KAEZAN SATRIA WINATA",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-013",
+      "name": "LALU AL IBNU HADI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-014",
+      "name": "LALU MUHAMMAD NADIER",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-015",
+      "name": "LALU SATRIA ALKINDI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-016",
+      "name": "MONIKA FILZIA NISPA",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-017",
+      "name": "MUHAMMAD RIVALDI AL FATIH",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-018",
+      "name": "NIHAL FEBRIAN MAULANI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-019",
+      "name": "NOVIZA FEBRIANI",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-020",
+      "name": "PARIATUN NUHA",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-021",
+      "name": "REZA WIRIAN DANE",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-022",
+      "name": "SITI ASIAH",
+      "class": "9.2"
+    },
+    {
+      "id": "SMP4-92-023",
+      "name": "SYIFA NUR FADILA",
+      "class": "9.2"
+    }
+  ]
+};
+
+  function normalizeDashboardName(value) {
+    return String(value == null ? '' : value)
+      .normalize('NFKC')
+      .replace(/\u2060/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  function resolveDashboardStudent(item) {
+    const studentId = String(item && item.studentId || '').trim().toUpperCase();
+    const name = normalizeDashboardName(item && item.name);
+
+    if (studentId) {
+      for (const cls of Object.keys(DASHBOARD_ROSTER)) {
+        const found = (DASHBOARD_ROSTER[cls] || []).find(s => String(s.id).toUpperCase() === studentId);
+        if (found) return found;
+      }
+    }
+
+    if (name) {
+      const matches = [];
+      for (const cls of Object.keys(DASHBOARD_ROSTER)) {
+        for (const s of (DASHBOARD_ROSTER[cls] || [])) {
+          if (normalizeDashboardName(s.name) === name) matches.push(s);
+        }
+      }
+      if (matches.length === 1) return matches[0];
+    }
+
+    return null;
+  }
+
+  function getDashboardClass(item) {
+    const identity = resolveDashboardStudent(item);
+    if (identity) return identity.class;
+    const raw = String(item && (item.studentClass ?? item.class) || '').trim();
+    const match = raw.match(/(?:kelas\s*)?([789]\.[123])/i);
+    return match ? match[1] : raw;
+  }
+
+  let teacherSession = sessionStorage.getItem('TEACHER_SESSION') || '';
+
+  // Inisialisasi lebih awal agar tidak terjadi ReferenceError/TDZ pada browser.
+  const SCHEDULE_SUBJECT_OPTIONS = [
+    ['pai','PAI & BP'],['ppkn','Pendidikan Pancasila'],['indo','Bahasa Indonesia'],['mtk','Matematika'],
+    ['ipa','Ilmu Pengetahuan Alam'],['inggris','Bahasa Inggris'],['ips','Ilmu Pengetahuan Sosial'],['informa','Informatika'],
+    ['prakarya','Prakarya'],['pjok','PJOK'],['mulok','Muatan Lokal'],['susulan','Susulan / Cadangan']
+  ];
+  let scheduleRows = [];
+
+  initScheduleSubjectOptions();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScheduleSubjectOptions, { once: true });
+  } else {
+    initScheduleSubjectOptions();
+  }
+
+  window.onload = function() {
+    if (teacherSession) {
+      verifyTeacherSession();
+    } else {
+      showAuthGate();
+    }
+  };
+
+  function showAuthGate(message) {
+    document.getElementById('authGate').style.display = 'flex';
+    document.getElementById('dashboardContent').style.display = 'none';
+    if (message) document.getElementById('authStatus').innerText = message;
+    setTimeout(() => document.getElementById('teacherPin').focus(), 50);
+  }
+
+  function hideAuthGate() {
+    document.getElementById('authGate').style.display = 'none';
+    document.getElementById('dashboardContent').style.display = 'block';
+    document.getElementById('authStatus').innerText = '';
+    document.getElementById('teacherPin').value = '';
+  }
+
+  function teacherLogin() {
+    const pin = document.getElementById('teacherPin').value.trim();
+    const status = document.getElementById('authStatus');
+    if (!pin) { status.innerText = 'PIN guru wajib diisi.'; return; }
+    status.innerText = 'Memverifikasi PIN...';
+    fetch(`${SCRIPT_URL}?action=teacherLogin&pin=${encodeURIComponent(pin)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.success || !data.session) throw new Error(data && data.message ? data.message : 'PIN salah.');
+        teacherSession = data.session;
+        sessionStorage.setItem('TEACHER_SESSION', teacherSession);
+        hideAuthGate();
+        loadLiveToken();
+        fetchLiveResults();
+        fetchBlacklist();
+        initScheduleSubjectOptions();
+        loadScheduleSettings();
+        startDashboardSync();
+      })
+      .catch(err => {
+        console.error(err);
+        status.innerText = 'PIN guru salah atau akses server gagal.';
+      });
+  }
+
+  function teacherLogout() {
+    clearInterval(dashboardSyncTimer);
+    dashboardSyncTimer = null;
+    teacherSession = '';
+    sessionStorage.removeItem('TEACHER_SESSION');
+    showAuthGate('Sesi guru telah ditutup.');
+  }
+
+  function verifyTeacherSession() {
+    fetch(`${SCRIPT_URL}?action=verifyTeacherSession&session=${encodeURIComponent(teacherSession)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.valid) throw new Error('Sesi tidak valid.');
+        hideAuthGate();
+        loadLiveToken();
+        fetchLiveResults();
+        fetchBlacklist();
+        initScheduleSubjectOptions();
+        loadScheduleSettings();
+        startDashboardSync();
+      })
+      .catch(() => {
+        teacherSession = '';
+        sessionStorage.removeItem('TEACHER_SESSION');
+        showAuthGate('Sesi guru sudah berakhir. Silakan masuk kembali.');
+      });
+  }
+
+  function handleTeacherAuthError(data) {
+    if (data && (data.authRequired || data.success === false && /sesi|akses|otorisasi/i.test(data.message || ''))) {
+      teacherLogout();
+      return true;
+    }
+    return false;
+  }
+
+  // Mengambil token aktif dari Cloud saat dashboard dibuka
+  function loadLiveToken() {
+    fetch(`${SCRIPT_URL}?action=getToken&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.token) {
+          document.getElementById('tokenInput').value = data.token;
+        }
+      })
+      .catch(err => console.error("Gagal memuat token dari server:", err));
+  }
+
+  // Menyimpan token baru ke Cloud
+  function saveToken() {
+    const newToken = document.getElementById('tokenInput').value.trim();
+    if (!newToken) return alert("Token tidak boleh kosong!");
+
+    const statusEl = document.getElementById('statusText');
+    statusEl.innerText = "Status: Menyimpan token ke cloud...";
+
+    fetch(`${SCRIPT_URL}?action=setToken&token=${encodeURIComponent(newToken)}&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (!data || data.success !== true || !data.token) {
+          throw new Error((data && data.message) || 'Server menolak pembaruan token.');
+        }
+        return fetch(`${SCRIPT_URL}?action=getToken&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, { cache: 'no-store' })
+          .then(res => res.json())
+          .then(check => {
+            if (!check || check.token !== data.token) {
+              throw new Error('Token server belum sesuai setelah diperbarui.');
+            }
+            alert(`Token ujian berhasil diperbarui di cloud: ${check.token}`);
+            document.getElementById('tokenInput').value = check.token;
+            statusEl.innerText = `Status: Token aktif di cloud saat ini adalah "${check.token}"`;
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Gagal memperbarui token ke server cloud!");
+        statusEl.innerText = "Status: Gagal menyimpan token.";
+      });
+  }
+
+  // Mengambil data nilai siswa dari Cloud
+  function fetchLiveResults() {
+    const statusEl = document.getElementById('statusText');
+    statusEl.innerText = "Status: Mengambil data terbaru dari Google Sheet...";
+
+    fetch(`${SCRIPT_URL}?session=${encodeURIComponent(teacherSession)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (handleTeacherAuthError(data)) return;
+        fetchedExamHistory = Array.isArray(data) ? data : [];
+        renderTable();
+        statusEl.innerText = `Status: Berhasil memperbarui data (${fetchedExamHistory.length} siswa ditemukan). Total diperbarui pada ${new Date().toLocaleTimeString('id-ID')}`;
+      })
+      .catch(err => {
+        console.error(err);
+        statusEl.innerText = "Status: Gagal mengambil data cloud.";
+      });
+  }
+
+  function normalizeDashboardClass(value) {
+    const raw = String(value == null ? '' : value).trim();
+    if (!raw) return '';
+    const compact = raw.replace(/^kelas\s*/i, '').trim();
+    const allowed = ['7.1','7.2','7.3','8.1','8.2','9.1','9.2'];
+    const hit = allowed.find(c => c.toLowerCase() === compact.toLowerCase());
+    return hit || '';
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('resultTableBody');
+    const filterClass = document.getElementById('filterClass').value;
+    let history = [...fetchedExamHistory];
+
+    if (filterClass !== "ALL") {
+      const wantedClass = normalizeDashboardClass(filterClass);
+      history = history.filter(item => normalizeDashboardClass(getDashboardClass(item)) === wantedClass);
+    }
+
+    if (history.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:#94a3b8;">Belum ada data ujian yang masuk.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = '';
+    history.forEach((item) => {
+      const row = document.createElement('tr');
+      
+      let essayText = "";
+      if (Array.isArray(item.essayAnswers) && item.essayAnswers.length > 0) {
+        essayText = item.essayAnswers.join("<br>");
+      } else if (typeof item.essayAnswers === 'string') {
+        essayText = item.essayAnswers.replace(/\n/g, "<br>");
+      } else {
+        essayText = "Tidak ada jawaban essay.";
+      }
+
+      const violText = `${item.violations || 0}x Pindah Tab`;
+
+      const displayClass = normalizeDashboardClass(getDashboardClass(item)) || '-';
+      const displayName = (resolveDashboardStudent(item) || {}).name || item.name || '-';
+      const safeEssay = escapeHtml(String(essayText).replace(/<br\s*\/?>/gi, '\n')).replace(/\n/g, '<br>');
+      row.innerHTML = `
+        <td>${escapeHtml(String(item.time || '-'))}</td>
+        <td>${escapeHtml(String(displayName))}</td>
+        <td>${escapeHtml(displayClass)}</td>
+        <td>${escapeHtml(String(item.subject || '-'))}</td>
+        <td><b>${escapeHtml(String(item.score !== undefined ? item.score : 0))}</b></td>
+        <td>${escapeHtml(violText)}</td>
+        <td>${safeEssay}</td>
+        <td><span style="font-weight:800;color:${item.serverVerified ? '#10b981' : '#f59e0b'};">${item.serverVerified ? 'TERVERIFIKASI' : 'LEGACY'}</span></td>
+        <td title="${escapeHtml(String(item.submissionId || ''))}">${escapeHtml(String(item.submissionId ? String(item.submissionId).slice(0, 12) + (String(item.submissionId).length > 12 ? '…' : '') : '-'))}</td>
+        <td>${escapeHtml(String(item.startTime || '-'))}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  // ================= SISTEM BLACKLIST =================
+  function fetchBlacklist() {
+    const tbody = document.getElementById('blacklistTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#94a3b8;">Memuat daftar blacklist dari cloud...</td></tr>`;
+    fetch(`${SCRIPT_URL}?action=getBlacklist&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (handleTeacherAuthError(data)) return;
+        const list = Array.isArray(data) ? data : (Array.isArray(data.blacklist) ? data.blacklist : []);
+        if (!list.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#10b981;font-weight:700;">Tidak ada siswa yang sedang diblokir.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = '';
+        list.forEach(item => {
+          const tr = document.createElement('tr');
+          const blocked = item.blocked === true;
+          const rosterIdentity = resolveDashboardStudent(item);
+          const resolvedClass = getDashboardClass(item);
+          const resolvedName = rosterIdentity ? rosterIdentity.name : (item.name || '-');
+          const resolvedStudentId = rosterIdentity ? rosterIdentity.id : (item.studentId || '');
+
+          tr.innerHTML = `
+            <td><b>${escapeHtml(resolvedName)}</b></td>
+            <td>${escapeHtml(normalizeDashboardClass(resolvedClass) || resolvedClass || '-')}</td>
+            <td>${item.violations || 0}x</td>
+            <td>${escapeHtml(item.reason || 'Mencapai batas pelanggaran')}</td>
+            <td>${escapeHtml(item.blockedAt || item.time || '-')}</td>
+            <td><span class="blacklist-badge">${blocked ? 'DIBLOKIR' : 'DIIZINKAN'}</span></td>
+            <td>${
+              blocked
+                ? `<button class="btn-allow" onclick="allowStudent('${encodeURIComponent(resolvedStudentId)}','${encodeURIComponent(resolvedName)}','${encodeURIComponent(normalizeDashboardClass(resolvedClass) || resolvedClass || '')}')"><i class="fa-solid fa-unlock"></i> Buka Blokir</button>`
+                : '-'
+            }</td>`;
+
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#ef4444;font-weight:700;">Gagal mengambil daftar blacklist dari server.</td></tr>`;
+      });
+  }
+
+  let allowStudentBusy = false;
+
+  async function allowStudent(encodedId, encodedName, encodedClass) {
+    if (allowStudentBusy) return;
+
+    const studentId = decodeURIComponent(encodedId || '').trim();
+    const name = decodeURIComponent(encodedName || '').trim();
+    const studentClass = decodeURIComponent(encodedClass || '').trim();
+
+    if (!name || !studentClass) {
+      alert('Nama dan kelas siswa tidak tersedia pada data blacklist.');
+      return;
+    }
+
+    if (!teacherSession) {
+      alert('Sesi guru belum aktif. Silakan masuk kembali ke dashboard.');
+      return;
+    }
+
+    if (!confirm(`BUKA BLOKIR untuk ${name} (Kelas ${studentClass})?\n\nStatus siswa akan diubah menjadi DIIZINKAN dan dapat login kembali.`)) return;
+
+    allowStudentBusy = true;
+    const buttons = document.querySelectorAll('.btn-allow');
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      btn.dataset.oldText = btn.innerText;
+      btn.innerText = 'Memproses...';
+    });
+
+    try {
+      const params = new URLSearchParams({
+        action: 'allowStudent',
+        studentId: studentId,
+        name: name,
+        studentClass: studentClass,
+        session: teacherSession,
+        t: String(Date.now())
+      });
+
+      const res = await fetch(`${SCRIPT_URL}?${params.toString()}`, {
+        cache: 'no-store'
+      });
+      const data = await res.json();
+
+      if (handleTeacherAuthError(data)) throw new Error('Sesi guru tidak valid atau sudah berakhir.');
+      if (!data || data.success !== true || data.blocked !== false || data.status !== 'DIIZINKAN') {
+        throw new Error((data && data.message) || 'Server belum mengonfirmasi pembukaan blokir.');
+      }
+
+      // Konfirmasi kedua dari server: baca ulang daftar blacklist setelah
+      // perubahan benar-benar tersimpan di Google Sheet.
+      const checkParams = new URLSearchParams({
+        action: 'getBlacklist',
+        session: teacherSession,
+        _: String(Date.now())
+      });
+      const checkRes = await fetch(`${SCRIPT_URL}?${checkParams.toString()}`, { cache: 'no-store' });
+      const checkData = await checkRes.json();
+      if (handleTeacherAuthError(checkData)) throw new Error('Sesi guru tidak valid.');
+
+      const list = Array.isArray(checkData)
+        ? checkData
+        : (Array.isArray(checkData.blacklist) ? checkData.blacklist : []);
+
+      const sameStudent = list.filter(item => {
+        const itemName = String(item.name || '').trim().toLowerCase();
+        const itemClass = normalizeDashboardClass(item.studentClass || item.class || '');
+        const targetClass = normalizeDashboardClass(studentClass);
+        const itemId = String(item.studentId || '').trim();
+        return (studentId && itemId === studentId) ||
+          (itemName === name.trim().toLowerCase() && itemClass === targetClass);
+      });
+
+      const stillBlocked = sameStudent.some(item => item.blocked === true || String(item.status || '').toUpperCase() === 'DIBLOKIR');
+      if (stillBlocked) {
+        throw new Error('Server masih membaca siswa sebagai DIBLOKIR. Tidak ada pesan sukses palsu yang ditampilkan.');
+      }
+
+      alert(`✓ BLOKIR DIBUKA\n\n${name} (${studentClass}) sekarang berstatus DIIZINKAN dan dapat login kembali.`);
+      await fetchBlacklist();
+    } catch (err) {
+      console.error(err);
+      alert('Gagal membuka blokir siswa:\n' + (err.message || 'Periksa koneksi/server.'));
+      await fetchBlacklist();
+    } finally {
+      allowStudentBusy = false;
+      document.querySelectorAll('.btn-allow').forEach(btn => {
+        btn.disabled = false;
+        btn.innerText = btn.dataset.oldText || 'Buka Blokir';
+      });
+    }
+  }
+
+
+  function initScheduleSubjectOptions() {
+    const sel = document.getElementById('scheduleSubject');
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="" disabled>-- Pilih Mata Pelajaran --</option>' +
+      SCHEDULE_SUBJECT_OPTIONS.map(([v,l]) => `<option value="${v}">${l}</option>`).join('');
+    if (current && SCHEDULE_SUBJECT_OPTIONS.some(([v]) => v === current)) {
+      sel.value = current;
+    } else {
+      sel.value = '';
+    }
+  }
+
+  function scheduleSubjectLabel(code) {
+    const found = SCHEDULE_SUBJECT_OPTIONS.find(x => x[0] === code);
+    return found ? found[1] : code;
+  }
+
+  function renderScheduleRows() {
+    const tbody = document.getElementById('scheduleTableBody');
+    if (!tbody) return;
+    if (!scheduleRows.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#64748b;">Belum ada jadwal. Tambahkan jadwal di atas.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = scheduleRows.map((row,i) => `
+      <tr>
+        <td><input type="date" value="${escapeHtml(row.date)}" onchange="updateScheduleRow(${i},'date',this.value)"></td>
+        <td><input type="time" value="${escapeHtml(row.start)}" onchange="updateScheduleRow(${i},'start',this.value)"></td>
+        <td><input type="time" value="${escapeHtml(row.end)}" onchange="updateScheduleRow(${i},'end',this.value)"></td>
+        <td><select onchange="updateScheduleRow(${i},'subject',this.value)">${SCHEDULE_SUBJECT_OPTIONS.map(([v,l]) => `<option value="${v}" ${v===row.subject?'selected':''}>${l}</option>`).join('')}</select></td>
+        <td><button class="btn btn-logout" style="padding:7px 10px;" onclick="removeScheduleRow(${i})"><i class="fa-solid fa-trash"></i> Hapus</button></td>
+      </tr>`).join('');
+  }
+
+  function updateScheduleRow(index, field, value) {
+    if (!scheduleRows[index]) return;
+    scheduleRows[index][field] = String(value || '');
+  }
+
+  function addScheduleRow() {
+    const date = document.getElementById('scheduleDate').value;
+    const start = document.getElementById('scheduleStart').value;
+    const end = document.getElementById('scheduleEnd').value;
+    const subject = document.getElementById('scheduleSubject').value;
+    if (!date || !start || !end || !subject) return alert('Tanggal, jam, dan mata pelajaran wajib diisi.');
+    if (start >= end) return alert('Jam selesai harus lebih besar dari jam mulai.');
+    scheduleRows.push({date,start,end,subject});
+    scheduleRows.sort((a,b) => (a.date+a.start).localeCompare(b.date+b.start));
+    renderScheduleRows();
+  }
+
+  function removeScheduleRow(index) {
+    if (!confirm('Hapus jadwal ini dari daftar sebelum disimpan?')) return;
+    scheduleRows.splice(index,1);
+    renderScheduleRows();
+  }
+
+  function rowsToScheduleObject() {
+    const out = {};
+    scheduleRows.forEach(row => {
+      if (!row.date) return;
+      if (!out[row.date]) out[row.date] = [];
+      out[row.date].push({start:row.start,end:row.end,subjects:[row.subject]});
+    });
+    return out;
+  }
+
+  async function loadScheduleSettings() {
+    const status = document.getElementById('scheduleAdminStatus');
+    if (status) status.innerText = 'Status: mengambil jadwal dari server...';
+    try {
+      const res = await fetch(`${SCRIPT_URL}?action=getSchedule&_=${Date.now()}`, {cache:'no-store'});
+      const data = await res.json();
+      if (!data || data.success !== true) throw new Error(data && data.message || 'Jadwal server tidak tersedia.');
+      scheduleRows = [];
+      Object.keys(data.schedule || {}).sort().forEach(date => {
+        (Array.isArray(data.schedule[date]) ? data.schedule[date] : []).forEach(slot => {
+          scheduleRows.push({date,start:String(slot.start||''),end:String(slot.end||''),subject:String((slot.subjects||[])[0]||'susulan')});
+        });
+      });
+      renderScheduleRows();
+      if (status) status.innerText = `Status: ${scheduleRows.length} slot jadwal berhasil dimuat dari server (${data.timezone || 'Asia/Makassar'}).`;
+    } catch (err) {
+      if (status) status.innerText = 'Status: gagal memuat jadwal. ' + (err.message || 'Periksa koneksi.');
+      console.error(err);
+    }
+  }
+
+  async function saveScheduleSettings() {
+    if (!teacherSession) return alert('Sesi guru belum aktif.');
+    if (!scheduleRows.length) return alert('Jadwal masih kosong. Tambahkan minimal satu jadwal.');
+    const status = document.getElementById('scheduleAdminStatus');
+    const schedule = rowsToScheduleObject();
+    if (status) status.innerText = 'Status: menyimpan jadwal ke server...';
+    try {
+      const params = new URLSearchParams({action:'saveSchedule',session:teacherSession,schedule:JSON.stringify(schedule),_:String(Date.now())});
+      const res = await fetch(`${SCRIPT_URL}?${params.toString()}`, {cache:'no-store'});
+      const data = await res.json();
+      if (handleTeacherAuthError(data)) throw new Error('Sesi guru tidak valid.');
+      if (!data || data.success !== true) throw new Error(data && data.message || 'Server menolak jadwal.');
+      await loadScheduleSettings();
+      alert('✓ Jadwal ujian berhasil disimpan di server. Index ujian akan mengikuti jadwal ini tanpa mengedit HTML.');
+    } catch (err) {
+      if (status) status.innerText = 'Status: gagal menyimpan jadwal.';
+      alert('Gagal menyimpan jadwal: ' + (err.message || 'Periksa koneksi/server.'));
+    }
+  }
+
+  async function resetScheduleSettings() {
+    if (!teacherSession) return alert('Sesi guru belum aktif.');
+    if (!confirm('Kembalikan jadwal ke jadwal default sistem?')) return;
+    try {
+      const res = await fetch(`${SCRIPT_URL}?action=resetSchedule&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, {cache:'no-store'});
+      const data = await res.json();
+      if (handleTeacherAuthError(data)) throw new Error('Sesi guru tidak valid.');
+      if (!data || data.success !== true) throw new Error(data && data.message || 'Gagal mengembalikan jadwal default.');
+      await loadScheduleSettings();
+      alert('Jadwal default berhasil dikembalikan.');
+    } catch (err) {
+      alert('Gagal mengembalikan jadwal default: ' + (err.message || 'Periksa koneksi/server.'));
+    }
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  }
+
+  // Sinkronisasi berkala agar izin/blokir guru terlihat tanpa refresh manual.
+  let dashboardSyncTimer = null;
+  function startDashboardSync() {
+    clearInterval(dashboardSyncTimer);
+    dashboardSyncTimer = setInterval(() => {
+      if (teacherSession) {
+        fetchLiveResults();
+        fetchBlacklist();
+      }
+    }, 10000);
+  }
+
+  function exportToExcel() {
+    const tableHTML = document.getElementById('exportTable').outerHTML.replace(/ /g, '%20');
+    const filename = `Rekap_Nilai_Ujian_${new Date().toISOString().slice(0,10)}.xls`;
+    
+    const downloadLink = document.createElement('a');
+    downloadLink.href = 'data:application/vnd.ms-excel,' + tableHTML;
+    downloadLink.download = filename;
+    
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
+</script>
+</body>
+</html>
